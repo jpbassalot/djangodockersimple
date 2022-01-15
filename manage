@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker exec -it djangodockersimple_web_1 pipenv run python manage.py 
