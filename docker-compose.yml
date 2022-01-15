@@ -3,7 +3,6 @@ version: "3"
 services:
   web:
     build: .
-    restart: unless-stopped
     command: ${RUN_COMMAND}
 
     volumes:
@@ -16,7 +15,6 @@ services:
       - '.env'
   db:
     image: postgres
-    restart: unless-stopped
     user: 1000:1000
     ports:
       - "5432:5432"
