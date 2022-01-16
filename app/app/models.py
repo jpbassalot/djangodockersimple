@@ -31,7 +31,12 @@ class TaskApplication(models.Model):
 
 class Task(models.Model):
     task_application = models.ForeignKey(TaskApplication, on_delete=models.CASCADE)
-    status = models.CharField(max_length=200, choices=('new', 'in_progress', 'done'), default='new', db_index=True)
+    status_choices = (
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('done', 'Done'),
+    )
+    status = models.CharField(max_length=200, choices=status_choices, default='new', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
