@@ -85,6 +85,9 @@ target/
 __pycache__/
 local_settings.py
 
+### Ignore .idea folders from jetbrains ides ###
+.idea
+
 .env
 db.sqlite3
 
