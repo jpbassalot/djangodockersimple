@@ -35,6 +35,7 @@ class Task(models.Model):
         ('new', 'New'),
         ('in_progress', 'In Progress'),
         ('done', 'Done'),
+        ('failed', 'Failed'),
     )
     status = models.CharField(max_length=200, choices=status_choices, default='new', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)

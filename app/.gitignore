@@ -77,6 +77,8 @@ docs/_build/
 # PyBuilder
 target/
 
+### Ignore .idea folders from jetbrains ides ###
+.idea
 
 ### Django ###
 *.log
