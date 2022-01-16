@@ -8,7 +8,7 @@ RUN pip install pipenv
 RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
 COPY app/ /app
-RUN cd /app && pipenv install --system
+RUN cd /app && pipenv install --system --deploy --ignore-pipfile
 
 # Create and switch to a new user
 RUN useradd --create-home appuser
