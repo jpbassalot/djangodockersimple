@@ -3,7 +3,7 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from app.models import Application
+from app.models import Application, Command
 from app.serializers import ApplicationSerializer
 
 
