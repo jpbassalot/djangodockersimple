@@ -1,51 +1,57 @@
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
+from django.http import Http404
+from rest_framework import status, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from app.models import Application
 from app.serializers import ApplicationSerializer
 
 
-@csrf_exempt
-def application_list(request):
+class ApplicationList(APIView):
     """
-    List all applications, or create a new application.
+    List all Applications, or create a new one
     """
-    if request.method == 'GET':
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
         applications = Application.objects.all()
         serializer = ApplicationSerializer(applications, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ApplicationSerializer(data=data)
+    def post(self, request, format=None):
+        serializer = ApplicationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
-def application_detail(request, pk):
+class ApplicationDetail(APIView):
     """
-    Retrieve, update or delete a code snippet.
+    Retrieve, update or delete an Application instance
     """
-    try:
-        snippet = Application.objects.get(pk=pk)
-    except Application.DoesNotExist:
-        return HttpResponse(status=404)
+    permission_classes = [permissions.IsAuthenticated]
 
-    if request.method == 'GET':
+    def get_object(self, pk):
+        try:
+            return Application.objects.get(pk=pk)
+        except Application.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        snippet = self.get_object(pk)
         serializer = ApplicationSerializer(snippet)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = ApplicationSerializer(snippet, data=data)
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = ApplicationSerializer(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
         snippet.delete()
-        return HttpResponse(status=204)
+        return Response(status=status.HTTP_204_NO_CONTENT)
