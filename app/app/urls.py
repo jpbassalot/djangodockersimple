@@ -1,10 +1,18 @@
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
-from app import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from app.views.application_views import ApplicationViewSet
+from app.views.command_views import CommandViewSet
+from app.views.task_views import TaskApplicationViewSet, TaskViewSet
+from app.views.user_views import UserViewSet
+
+router = DefaultRouter()
+router.register(r'applications', ApplicationViewSet)
+router.register(r'users', UserViewSet)
+router.register(r'task-applications', TaskApplicationViewSet)
+router.register(r'commands', CommandViewSet)
+router.register(r'tasks', TaskViewSet)
 
 urlpatterns = [
-    path('applications/', views.ApplicationList.as_view()),
-    path('applications/<int:pk>/', views.ApplicationDetail.as_view()),
+    path('', include(router.urls)),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
