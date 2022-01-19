@@ -19,7 +19,7 @@ class Command(models.Model):
 
 
 class TaskApplication(models.Model):
-    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name='task_application_set')
     command = models.ForeignKey(Command, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)

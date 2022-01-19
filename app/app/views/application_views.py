@@ -19,7 +19,8 @@ class ApplicationViewSet(viewsets.ModelViewSet):
     """
     List all Applications, or create a new one
     """
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     queryset = Application.objects.all()
+    print(queryset.query)
     serializer_class = ApplicationSerializer

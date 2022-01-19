@@ -8,7 +8,7 @@ class CommandViewSet(viewsets.ModelViewSet):
     """
     List all Commands, or create a new one
     """
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     queryset = Command.objects.all()
     serializer_class = CommandSerializer
