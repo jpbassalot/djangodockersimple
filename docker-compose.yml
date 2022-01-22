@@ -15,7 +15,7 @@ services:
       - '.env'
   db:
     image: postgres
-    user: 1000:1000
+    user: ${UID}:${UID}
     ports:
       - "5432:5432"
     env_file:
