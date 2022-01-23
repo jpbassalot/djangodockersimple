@@ -93,3 +93,6 @@ db.sqlite3
 
 ### PGSQL Data Dir ###
 data
+
+### Django Static Files ###
+app/static/
