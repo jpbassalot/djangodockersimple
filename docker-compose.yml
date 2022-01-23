@@ -4,6 +4,7 @@ services:
   web:
     build: .
     command: ${RUN_COMMAND}
+    user: ${UID}:${UID}
 
     volumes:
       - ./app:/app
