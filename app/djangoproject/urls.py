@@ -6,8 +6,8 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from app.views.root_view import root
 
-from app.views.application_views import api_root
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/', include('app.urls')),
     path('admin/', admin.site.urls),
+    path('', root)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
