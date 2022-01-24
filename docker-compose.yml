@@ -24,3 +24,11 @@ services:
     volumes:
       - ./data:/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./app/static:/app/static
+    ports:
+      - "8001:80"
+    depends_on:
+      - web
